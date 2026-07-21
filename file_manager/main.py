@@ -2,17 +2,17 @@ import argparse
 from pathlib import Path
 
 def parse_args():
-    parse = argparse.ArgumentParser(description="File manager utility")
-    parse.add_argument("--dir", required=True, help="Directory path")
-    parse.add_argument("--ext", required=True, help="File extension (e.g.m .txt)")
-    parse.add_argument("--yes", action="store_true", help="Skip confirmation prompts")
-    parse.add_argument(
+    parser = argparse.ArgumentParser(description="File manager utility")
+    parser.add_argument("--dir", required=True, help="Directory path")
+    parser.add_argument("--ext", required=True, help="File extension (e.g. .txt)")
+    parser.add_argument("--yes", action="store_true", help="Skip confirmation prompts")
+    parser.add_argument(
         "--action", 
         choices=["count", "delete", "move"],
         default="count",
         help="Action to perform"
         )
-    return parse.parse_args()
+    return parser.parse_args()
 
 def count_files(directory: Path, extension: str) -> int:
     """Count files with given extension in directory"""
@@ -57,7 +57,7 @@ def delete_files(directory: Path, extension: str, yes: bool = False) -> int:
             except Exception as e:
                 print(f'Ошибка при удалении {item.name}: {e}')
 
-    return total_files
+    return deleted_count
 
 def main():
     args = parse_args()
@@ -85,7 +85,6 @@ def main():
         print(f"Удалено файлов: {total}")
     else:
         print(f"Действие '{args.action}' пока не реализовано. Скоро будет!")
-    # TODO: Вызвать нужную функцию в зависимости от action
 
 
 if __name__ == "__main__":
