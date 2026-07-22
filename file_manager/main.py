@@ -59,6 +59,18 @@ def delete_files(directory: Path, extension: str, yes: bool = False) -> int:
 
     return deleted_count
 
+def move_files(directory: Path, extension: str, target_dir: Path, yes: bool=False) -> int:
+    if not extension.startswith("."):
+        extension = f".{extension}"
+
+    total_files = count_files(directory, extension)
+
+    if total_files == 0:
+        print(f"Файлов с расширением {extension} не найдено")
+        return 0
+    
+    
+
 def main():
     args = parse_args()
     directory = Path(args.dir)
